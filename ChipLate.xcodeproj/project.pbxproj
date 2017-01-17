@@ -10,6 +10,8 @@
 		5534B7C51E2B59DA0020604F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534B7C41E2B59DA0020604F /* AppDelegate.swift */; };
 		5534B7C71E2B59DA0020604F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5534B7C61E2B59DA0020604F /* Assets.xcassets */; };
 		5534B7CA1E2B59DA0020604F /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5534B7C81E2B59DA0020604F /* MainMenu.xib */; };
+		5534B7D21E2B5E850020604F /* Chip8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5534B7D11E2B5E850020604F /* Chip8.swift */; };
+		5573726B1E2DBD5600D6DACF /* Chip8View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5573726A1E2DBD5600D6DACF /* Chip8View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,8 @@
 		5534B7C61E2B59DA0020604F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5534B7C91E2B59DA0020604F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		5534B7CB1E2B59DA0020604F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5534B7D11E2B5E850020604F /* Chip8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chip8.swift; sourceTree = "<group>"; };
+		5573726A1E2DBD5600D6DACF /* Chip8View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Chip8View.swift; path = ../Chip8View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,7 +54,9 @@
 		5534B7C31E2B59DA0020604F /* ChipLate */ = {
 			isa = PBXGroup;
 			children = (
+				5573726A1E2DBD5600D6DACF /* Chip8View.swift */,
 				5534B7C41E2B59DA0020604F /* AppDelegate.swift */,
+				5534B7D11E2B5E850020604F /* Chip8.swift */,
 				5534B7C61E2B59DA0020604F /* Assets.xcassets */,
 				5534B7C81E2B59DA0020604F /* MainMenu.xib */,
 				5534B7CB1E2B59DA0020604F /* Info.plist */,
@@ -130,6 +136,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5573726B1E2DBD5600D6DACF /* Chip8View.swift in Sources */,
+				5534B7D21E2B5E850020604F /* Chip8.swift in Sources */,
 				5534B7C51E2B59DA0020604F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +293,7 @@
 				5534B7D01E2B59DA0020604F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

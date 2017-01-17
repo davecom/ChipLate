@@ -1,0 +1,41 @@
+//
+//  Chip8View.swift
+//  ChipLate
+//
+//  Created by David Kopec on 1/16/17.
+//  Copyright © 2017 David Kopec. All rights reserved.
+//
+
+import Cocoa
+
+class Chip8View: NSView {
+    var bitmap: [Byte] = []
+    var bitmapWidth: Int = 0
+    var bitmapHeight: Int = 0
+
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
+        // draw black background
+        NSColor.black.setFill()
+        NSRectFill(bounds)
+        
+        // draw pixels as white rectangles
+        NSColor.white.setFill()
+        let width = self.frame.size.width
+        let height = self.frame.size.height
+        let rectSize = CGSize(width: width / CGFloat(bitmapWidth), height: height / CGFloat(bitmapHeight))
+        
+        for x in 0..<bitmapWidth {
+            for y in 0..<bitmapHeight {
+                if bitmap[y * bitmapWidth + x] == 1 {
+                    NSRectFill(NSRect(origin: CGPoint(x: CGFloat(x) * rectSize.width, y: CGFloat(y) * rectSize.height), size: rectSize))
+                }
+            }
+        }
+    }
+    
+    override var isFlipped: Bool {
+        return true
+    }
+    
+}
