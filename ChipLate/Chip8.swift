@@ -63,7 +63,17 @@ struct Chip8 {
     private var delayTimer: Byte = 0
     private var soundTimer: Byte = 0
     // These hold the status of whether the keys are down - CHIP-8 has 16 keys
-    private var keys: [Bool] = [Bool](repeating: false, count: 16)
+    var keys: [Bool] = [Bool](repeating: false, count: 16)
+    
+    var playSound: Bool {
+        return soundTimer > 0
+    }
+    
+    var _wait = false
+    
+    var wait: Bool {
+        return _wait
+    }
     
     init(memorySize: Int = 4096, width: Int = 64, height: Int = 32, rom: [Byte]) {
         // initialize memory
@@ -97,6 +107,8 @@ struct Chip8 {
         //printHex(second)
         //printHex(third)
         //printHex(fourth)
+        
+        _wait = false
         
         switch (first, second, third, fourth) {
         case (0x0, 0x0, 0xE, 0x0): // display clear
@@ -192,15 +204,16 @@ struct Chip8 {
             v[x] = delayTimer
             pc += 2
         case (0xF, let x, 0x0, 0xA): // wait until next key then store in v[x]
-            let lastKeys = keys
-            forever: while true {
-            for j in 0..<keys.count {
-                if keys[j] && !lastKeys[j] {
-                    v[x] = Byte(j)
-                    break forever
-                }
-            }
-            }
+//            let lastKeys = keys
+//            forever: while true {
+//            for j in 0..<keys.count {
+//                if keys[j] && !lastKeys[j] {
+//                    v[x] = Byte(j)
+//                    break forever
+//                }
+//            }
+//            }
+            _wait = true
             pc += 2
         case (0xF, let x, 0x1, 0x5): // set delayTimer to v[x]
             delayTimer = v[x]

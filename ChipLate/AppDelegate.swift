@@ -21,6 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        window.aspectRatio = NSSize(width: 2, height: 1)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -44,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         self.chip8 = Chip8(rom: array)
                         self.chip8View.bitmapWidth = (self.chip8?.width)!
                         self.chip8View.bitmapHeight = (self.chip8?.height)!
-                        self.emuTimer = Timer.scheduledTimer(timeInterval: 1/60.0, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
+                        self.emuTimer = Timer.scheduledTimer(timeInterval: 1/500.0, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
                     })
                     
                 } catch {
@@ -55,12 +56,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func timerFired() {
-        concurrentQueue.sync {
-            chip8?.cycle()
-            chip8View.bitmap = (chip8?.pixels)!
-            chip8View.needsDisplay = true
+        self.chip8?.cycle()
+        self.chip8View.bitmap = (self.chip8?.pixels)!
+        self.chip8View.needsDisplay = true
+        if (self.chip8?.playSound)! {
+            NSBeep()
+        }
+        if (self.chip8?.wait)! {
+            emuTimer?.invalidate()
         }
     }
 
+    var keys = ["1", "2", "3", "4", "q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v"]
+    //MARK: Called from Chip8View
+    func keyDown(with event: NSEvent) {
+        guard let pressed = event.characters else { return }
+        print("key pressed")
+        if let index = keys.index(of: pressed) {
+            chip8?.keys[index] = true
+            if (chip8?.wait)! {
+                emuTimer = Timer.scheduledTimer(timeInterval: 1/60.0, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
+            }
+        }
+    }
+    
+    
+    func keyUp(with event: NSEvent) {
+        guard let pressed = event.characters else { return }
+        if let index = keys.index(of: pressed) {
+            chip8?.keys[index] = false
+        }
+    }
 }
 

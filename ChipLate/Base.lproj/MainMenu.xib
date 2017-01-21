@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -126,18 +127,28 @@
         <window title="ChipLate" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
+            <rect key="contentRect" x="335" y="390" width="600" height="300"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
+                <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dqu-Sc-DyU" customClass="Chip8View" customModule="ChipLate" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="55" width="480" height="305"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Dqu-Sc-DyU" customClass="Chip8View" customModule="ChipLate" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                        <connections>
+                            <outlet property="delegate" destination="Voe-Tx-rLC" id="WOS-O2-Vyq"/>
+                        </connections>
                     </customView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Dqu-Sc-DyU" firstAttribute="width" secondItem="EiT-Mj-1SZ" secondAttribute="height" multiplier="2:1" id="9Dq-HY-DuU"/>
+                    <constraint firstItem="Dqu-Sc-DyU" firstAttribute="width" secondItem="EiT-Mj-1SZ" secondAttribute="width" id="DCP-Bu-qiw"/>
+                    <constraint firstItem="Dqu-Sc-DyU" firstAttribute="centerY" secondItem="EiT-Mj-1SZ" secondAttribute="centerY" id="IOe-wC-zDQ"/>
+                    <constraint firstItem="Dqu-Sc-DyU" firstAttribute="centerX" secondItem="EiT-Mj-1SZ" secondAttribute="centerX" id="IWC-Y7-Ahy"/>
+                    <constraint firstItem="Dqu-Sc-DyU" firstAttribute="height" secondItem="EiT-Mj-1SZ" secondAttribute="height" id="Mad-He-cPD"/>
+                </constraints>
             </view>
+            <point key="canvasLocation" x="192" y="132"/>
         </window>
     </objects>
 </document>

@@ -9,6 +9,8 @@
 import Cocoa
 
 class Chip8View: NSView {
+    @IBOutlet weak var delegate: AppDelegate!
+    
     var bitmap: [Byte] = []
     var bitmapWidth: Int = 0
     var bitmapHeight: Int = 0
@@ -34,8 +36,17 @@ class Chip8View: NSView {
         }
     }
     
-    override var isFlipped: Bool {
-        return true
+    override var isFlipped: Bool { return true }
+    
+    override var acceptsFirstResponder: Bool { return true }
+    
+    override func keyDown(with event: NSEvent) {
+        delegate.keyDown(with: event)
+    }
+    
+    
+    override func keyUp(with event: NSEvent) {
+        delegate.keyUp(with: event)
     }
     
 }
