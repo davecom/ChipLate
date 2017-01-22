@@ -45,6 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         self.chip8 = Chip8(rom: array)
                         self.chip8View.bitmapWidth = (self.chip8?.width)!
                         self.chip8View.bitmapHeight = (self.chip8?.height)!
+                        // run at about 500 hertz
                         self.emuTimer = Timer.scheduledTimer(timeInterval: 1/500.0, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
                     })
                     
@@ -56,9 +57,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func timerFired() {
+        // main loop
         self.chip8?.cycle()
-        self.chip8View.bitmap = (self.chip8?.pixels)!
-        self.chip8View.needsDisplay = true
+        if (chip8?.needsRedraw)! {
+            self.chip8View.bitmap = (self.chip8?.pixels)!
+            self.chip8View.needsDisplay = true
+        }
         if (self.chip8?.playSound)! {
             NSBeep()
         }
@@ -75,6 +79,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let index = keys.index(of: pressed) {
             chip8?.keys[index] = true
             if (chip8?.wait)! {
+                chip8?.lastKeyPressed = Byte(index)
                 emuTimer = Timer.scheduledTimer(timeInterval: 1/60.0, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
             }
         }

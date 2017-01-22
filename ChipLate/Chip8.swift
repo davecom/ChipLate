@@ -69,7 +69,13 @@ struct Chip8 {
         return soundTimer > 0
     }
     
+    // for dealing with key press events
+    var keyRegister: Byte = 16 // too high can't be, signal
+    var lastKeyPressed: Byte = 16 // too high can't be, signal
     var _wait = false
+    
+    // know when graphics changed
+    var needsRedraw = false
     
     var wait: Bool {
         return _wait
@@ -108,7 +114,17 @@ struct Chip8 {
         //printHex(third)
         //printHex(fourth)
         
+        
+        // deal with key pressed issues
         _wait = false
+        
+        if keyRegister < 16 {
+            v[keyRegister] = lastKeyPressed
+            keyRegister = 16
+        }
+        
+        // don't need redraw unless draw opcode is called
+        needsRedraw = false
         
         switch (first, second, third, fourth) {
         case (0x0, 0x0, 0xE, 0x0): // display clear
@@ -195,6 +211,7 @@ struct Chip8 {
             } else {
                 v[0xF] = 0
             }
+            needsRedraw = true
             pc += 2
         case (0xE, let x, 0x9, 0xE): // conditional skip if keys(v[x])
             pc = keys[v[x]] ? pc + 4 : pc + 2
@@ -204,16 +221,8 @@ struct Chip8 {
             v[x] = delayTimer
             pc += 2
         case (0xF, let x, 0x0, 0xA): // wait until next key then store in v[x]
-//            let lastKeys = keys
-//            forever: while true {
-//            for j in 0..<keys.count {
-//                if keys[j] && !lastKeys[j] {
-//                    v[x] = Byte(j)
-//                    break forever
-//                }
-//            }
-//            }
             _wait = true
+            keyRegister = x
             pc += 2
         case (0xF, let x, 0x1, 0x5): // set delayTimer to v[x]
             delayTimer = v[x]

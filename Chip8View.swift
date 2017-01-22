@@ -25,7 +25,7 @@ class Chip8View: NSView {
         NSColor.white.setFill()
         let width = self.frame.size.width
         let height = self.frame.size.height
-        let rectSize = CGSize(width: width / CGFloat(bitmapWidth), height: height / CGFloat(bitmapHeight))
+        let rectSize = CGSize(width: round(width / CGFloat(bitmapWidth)), height: round(height / CGFloat(bitmapHeight)))
         
         for x in 0..<bitmapWidth {
             for y in 0..<bitmapHeight {
