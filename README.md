@@ -1,6 +1,8 @@
 # ChipLate
 A simple CHIP-8 Emulator for macOS written in Swift.
 
+![ChipLateTicTacToe](https://raw.githubusercontent.com/davecom/ChipLate/master/chiplatettt.png)
+
 ## Usage
 This macOS CHIP-8 emulator runs ROMs for the original CHIP-8 platform. It implements keyboard input, with the 16 CHIP-8 keys mapped 1, 2, 3, 4, q, w, e, r, a, s, d, f, z, x, c, v. It implements the CHIP-8's basic black and white graphics with some simple Core Graphics rectangle filles. And it implements the CHIP-8's ability to make a simple beep with the system beep. ROM files can be loaded using the File->Open menu item.
 
