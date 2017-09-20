@@ -19,7 +19,7 @@ class Chip8View: NSView {
         super.draw(dirtyRect)
         // draw black background
         NSColor.black.setFill()
-        NSRectFill(bounds)
+        bounds.fill()
         
         // draw pixels as white rectangles
         NSColor.white.setFill()
@@ -30,7 +30,7 @@ class Chip8View: NSView {
         for x in 0..<bitmapWidth {
             for y in 0..<bitmapHeight {
                 if bitmap[y * bitmapWidth + x] == 1 {
-                    NSRectFill(NSRect(origin: CGPoint(x: CGFloat(x) * rectSize.width, y: CGFloat(y) * rectSize.height), size: rectSize))
+                    NSRect(origin: CGPoint(x: CGFloat(x) * rectSize.width, y: CGFloat(y) * rectSize.height), size: rectSize).fill()
                 }
             }
         }

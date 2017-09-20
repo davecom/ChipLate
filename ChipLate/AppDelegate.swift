@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = true
         openPanel.begin { (result) -> Void in
-            if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 do {
                     let data: Data = try Data(contentsOf: openPanel.url!)
                     data.withUnsafeBytes({ (pointer: UnsafePointer<Byte>) in
@@ -56,7 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func timerFired() {
+    @objc func timerFired() {
         // main loop
         self.chip8?.cycle()
         if (chip8?.needsRedraw)! {
@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.chip8View.needsDisplay = true
         }
         if (self.chip8?.playSound)! {
-            NSBeep()
+            NSSound.beep()
         }
         if (self.chip8?.wait)! {
             emuTimer?.invalidate()

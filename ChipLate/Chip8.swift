@@ -173,12 +173,12 @@ struct Chip8 {
             pc += 2
         case (0x8, let x, let y, 0x4): // add with carry flag
             var overflow: Bool
-            (v[x], overflow) = Byte.addWithOverflow(v[x], v[y])
+            (v[x], overflow) = v[x].addingReportingOverflow(v[y])
             v[0xF] = overflow ? 1 : 0
             pc += 2
         case (0x8, let x, let y, 0x5): // subtract with borrow flag
             var overflow: Bool
-            (v[x], overflow) = Byte.subtractWithOverflow(v[x], v[y])
+            (v[x], overflow) = v[x].subtractingReportingOverflow(v[y])
             v[0xF] = overflow ? 0 : 1
             pc += 2
         case (0x8, let x, _, 0x6): // v[x] >> 1 v[f] = least significant bit
@@ -187,7 +187,7 @@ struct Chip8 {
             pc += 2
         case (0x8, let x, let y, 0x7): // subtract with borrow flag
             var overflow: Bool
-            (v[x], overflow) = Byte.subtractWithOverflow(v[y], v[x])
+            (v[x], overflow) = v[y].subtractingReportingOverflow(v[x])
             v[0xF] = overflow ? 0 : 1
             pc += 2
         case (0x8, let x, _, 0xE): // v[x] << 1 v[f] = most significant bit
@@ -311,8 +311,8 @@ struct Chip8 {
 
 //MARK: Utility Functions
 
-func printHex<I: Integer & CVarArg>(_ value: I) {
-    print(String(format:"%X", value))
+func printHex<I: BinaryInteger & CVarArg>(_ value: I) {
+    print(String(format:"%X", value as CVarArg))
 }
 
 // smash some bytes together
