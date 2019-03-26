@@ -108,7 +108,7 @@ struct Chip8 {
         let opcode: Word = Word(first2) << 8 | Word(last2)
         
         //for debug
-        printHex(opcode)
+        //printHex(opcode)
         //printHex(first)
         //printHex(second)
         //printHex(third)

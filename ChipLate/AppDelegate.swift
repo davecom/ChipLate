@@ -22,6 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         window.aspectRatio = NSSize(width: 2, height: 1)
+        chip8View
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -39,8 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if result.rawValue == NSFileHandlingPanelOKButton {
                 do {
                     let data: Data = try Data(contentsOf: openPanel.url!)
-                    data.withUnsafeBytes({ (pointer: UnsafePointer<Byte>) in
-                        let buffer = UnsafeBufferPointer(start: pointer, count: data.count)
+                    data.withUnsafeBytes({ (buffer: UnsafeRawBufferPointer) in
                         let array = Array<Byte>(buffer)
                         self.chip8 = Chip8(rom: array)
                         self.chip8View.bitmapWidth = (self.chip8?.width)!
@@ -76,7 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func keyDown(with event: NSEvent) {
         guard let pressed = event.characters else { return }
         print("key pressed")
-        if let index = keys.index(of: pressed) {
+        if let index = keys.firstIndex(of: pressed) {
             chip8?.keys[index] = true
             if (chip8?.wait)! {
                 chip8?.lastKeyPressed = Byte(index)
@@ -88,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func keyUp(with event: NSEvent) {
         guard let pressed = event.characters else { return }
-        if let index = keys.index(of: pressed) {
+        if let index = keys.firstIndex(of: pressed) {
             chip8?.keys[index] = false
         }
     }
